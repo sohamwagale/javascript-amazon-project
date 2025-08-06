@@ -36,13 +36,7 @@ export function addToCart(productId){
 };
 
 export function removeFromCart(productId){
-    let matchingItemForDelete;
-    cart.forEach((product)=>{
-        if(product.productId === productId){
-            matchingItemForDelete = product;
-        }
-    });
-    cart = cart.filter(item => item !== matchingItemForDelete);
+    cart = cart.filter(item => item.productId !== productId);
 }
 
 /*export function removeFromCart(productIdForDelete){
