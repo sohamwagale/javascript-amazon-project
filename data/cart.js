@@ -1,4 +1,4 @@
-export const cart = [
+export let cart = [
     {
         productId : 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
         quantity: 2
@@ -34,3 +34,25 @@ export function addToCart(productId){
         });
     }
 };
+
+export function removeFromCart(productId){
+    let matchingItemForDelete;
+    cart.forEach((product)=>{
+        if(product.productId === productId){
+            matchingItemForDelete = product;
+        }
+    });
+    cart = cart.filter(item => item !== matchingItemForDelete);
+}
+
+/*export function removeFromCart(productIdForDelete){
+    const newCart = [];
+
+    cart.forEach((cartItem)=>{
+        if(cartItem.productId !== productIdForDelete){
+            newCart.push(cartItem);
+        }
+    });
+
+    cart = newCart;
+}*/
