@@ -1,4 +1,12 @@
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
+import {products} from '../data/products.js';
+
+/**
+ * import * as cartModule from '../data/cart.js';
+ * 
+ * cartModule.cart
+ * cartModule.addToCart('id');
+ */
 
 let prodHTML = '';
 products.forEach((product)=>{
@@ -58,57 +66,45 @@ productsElement.innerHTML = prodHTML;
 
 const addedMessageTimeouts = {};
 
+function addedAnimation(productId){
+    const addedDisplay = document.querySelector(`.js-added-to-cart-${productId}`);
+    addedDisplay.classList.add('added-to-cart-visible');
+
+    const previousTimeoutId = addedMessageTimeouts[productId];
+    //hya productId che kahi previous timeouts asle tar te clear karayche
+    if(previousTimeoutId){
+        clearTimeout(previousTimeoutId)
+    }
+
+    const addedDisplayTimeoutId =setTimeout(()=>{
+        addedDisplay.classList.remove('added-to-cart-visible');
+    },2000);
+
+    addedMessageTimeouts[productId] = addedDisplayTimeoutId;
+    //nantar tyach productId la navin timeoutId assign karaycha override karun
+}
+
+function calcTotalCartQuantity(){
+    let cartTotalQuantity = 0;
+    cart.forEach((cartItem)=>{
+        cartTotalQuantity += cartItem.quantity;
+    })
+
+    document.querySelector('.js-cart-total-quantity')
+        .innerHTML = cartTotalQuantity;
+
+    console.log(cartTotalQuantity);
+}
+
 document.querySelectorAll('.js-add-to-cart')//using for each because we wanna add event listener to all buttons
     .forEach((button)=>{
         button.addEventListener('click',()=>{
             const productId = button.dataset.productId;//the kebab case product-name is converted to camel case productName
 
-            let mathcingItem;
+            addToCart(productId);
 
-            cart.forEach((item)=>{
-                if(item.productId = productId){
-                    mathcingItem = item;
-                }
-            })
+            addedAnimation(productId);    
 
-            const selectedQuantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
-            console.log(selectedQuantity)
-            if(mathcingItem){
-                mathcingItem.quantity +=selectedQuantity;
-            }
-            else{
-                cart.push({
-                    productId:productId,
-                    quantity: selectedQuantity
-                });
-            }
-
-            const addedDisplay = document.querySelector(`.js-added-to-cart-${productId}`);
-            
-            addedDisplay.classList.add('added-to-cart-visible');
-
-            const previousTimeoutId = addedMessageTimeouts[productId];
-            //hya productId che kahi previous timeouts asle tar te clear karayche
-            if(previousTimeoutId){
-                clearTimeout(previousTimeoutId)
-            }
-
-            const addedDisplayTimeoutId =setTimeout(()=>{
-                addedDisplay.classList.remove('added-to-cart-visible');
-            },2000);
-
-            addedMessageTimeouts[productId] = addedDisplayTimeoutId;
-            //nantar tyach productId la navin timeoutId assign karaycha override karun
-
-            let cartTotalQuantity = 0;
-            cart.forEach((item)=>{
-                cartTotalQuantity += item.quantity;
-            })
-
-            document.querySelector('.js-cart-total-quantity')
-                .innerHTML = cartTotalQuantity;
-
-            console.log(cartTotalQuantity);
-            //console.log(cart.q)
+            calcTotalCartQuantity();
         })
-    })
+    });
