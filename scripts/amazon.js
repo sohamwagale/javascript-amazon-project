@@ -1,6 +1,7 @@
-import {cart, addToCart} from '../data/cart.js';
+import {cart, addToCart ,calcTotalCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+
 
 /**
  * import * as cartModule from '../data/cart.js';
@@ -85,18 +86,13 @@ function addedAnimation(productId){
     //nantar tyach productId la navin timeoutId assign karaycha override karun
 }
 
-function calcTotalCartQuantity(){
-    let cartTotalQuantity = 0;
-    cart.forEach((cartItem)=>{
-        cartTotalQuantity += cartItem.quantity;
-    })
 
+function updateTotalCartQuantity(){
     document.querySelector('.js-cart-total-quantity')
-        .innerHTML = cartTotalQuantity;
-
-    console.log(cartTotalQuantity);
+        .innerHTML = calcTotalCartQuantity();
 }
-calcTotalCartQuantity();
+
+updateTotalCartQuantity();
 
 document.querySelectorAll('.js-add-to-cart')//using for each because we wanna add event listener to all buttons
     .forEach((button)=>{
@@ -108,6 +104,6 @@ document.querySelectorAll('.js-add-to-cart')//using for each because we wanna ad
 
             addedAnimation(productId);    
 
-            calcTotalCartQuantity();
+            updateTotalCartQuantity();
         })
     });
