@@ -1,4 +1,4 @@
-import { cart, removeFromCart, calcTotalCartQuantity} from "../data/cart.js";
+import { cart, removeFromCart, calcTotalCartQuantity, updateQuantity} from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
@@ -9,6 +9,7 @@ function findMatchingItem(productId){
     return products.find(product => product.id === productId);
 }
 
+//Generates the HTML for all cart items.
 cart.forEach((cartItem)=>{
 
     const productId = cartItem.productId;
@@ -39,12 +40,12 @@ cart.forEach((cartItem)=>{
             </div>
             <div class="product-quantity">
                 <span>
-                Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                Quantity: <span class="quantity-label js-cart-quantity-label-${productId}">${cartItem.quantity}</span>
                 </span>
                 <span class="update-quantity-link js-update-quantity-link link-primary" data-product-id="${productId}">
                 Update
                 </span>
-                <input class = "quantity-input js-quantity-input-${productId}" type = 'number' min = '1'>
+                <input class = "quantity-input js-quantity-input js-quantity-input-${productId}" type = 'number' min = '0' max = '1000'  value = '${cartItem.quantity}' data-product-id = '${productId}'>
                 <span class = "link-primary save-quantity-link js-save-quantity-link" data-product-id = '${productId}'>
                 Save
                 </span>
@@ -102,60 +103,90 @@ cart.forEach((cartItem)=>{
     </div>
     `;
 });
-
 orderSummary.innerHTML = orderSummaryHTML;
 
-//console.log(orderSummaryHTML);
 
+//Update checkout Items function
 function updateCheckoutItemsTotal(){
     document.querySelector('.js-checkout-items')
         .innerHTML = `${calcTotalCartQuantity()} items`;
 }
+updateCheckoutItemsTotal(); //Call it once when the page is loaded
 
-updateCheckoutItemsTotal();
 
+//Delete Cart Items
+function deleteCartItems(currProductId){
+    removeFromCart(currProductId);
+    const deleteProductHTML = document.querySelector(
+        `.js-cart-item-container-${currProductId}`
+    );
+    deleteProductHTML.remove();
+    updateCheckoutItemsTotal();
+}
+
+//Link to delete items
 document.querySelectorAll('.js-delete-link')
     .forEach((linkButton)=>{
         linkButton.addEventListener('click',()=>{
             const currProductId = linkButton.dataset.productId;
-            //console.log(currProductId);
-            removeFromCart(currProductId);
-            //console.log(cart)
-            const deleteProductHTML = document.querySelector(
-                `.js-cart-item-container-${currProductId}`
-            );
-            //console.log(deleteProductHTML);
-            deleteProductHTML.remove();
-            updateCheckoutItemsTotal();
+            deleteCartItems(currProductId);
         })
     });
 
+//When clicked of Update link
 document.querySelectorAll('.js-update-quantity-link')
     .forEach((quantityUpdateLink)=>{
         quantityUpdateLink.addEventListener('click',()=>{
             const currProductId = quantityUpdateLink.dataset.productId;
-            console.log(currProductId);
 
             document.querySelector(`.js-cart-item-container-${currProductId}`)
                 .classList.add('is-editing-quantity');
+        }); 
+    });
 
-        }) 
-    })
 
+//dataset used to get which element or button was clicked (READ)
+//whereas class = '{productId}' used to target a specific element (WRITE)
+
+
+//To handle and changes in Quantity
+function handleSaveQuantity(currProductId){
+    document.querySelector(`.js-cart-item-container-${currProductId}`)
+        .classList.remove('is-editing-quantity');
+
+    const newQuantity = Number(document.querySelector(`.js-quantity-input-${currProductId}`).value);
+
+    if (newQuantity < 0 || newQuantity >= 1000) {
+        alert('Quantity must be at least 0 and less than 1000');
+        return;
+    }
+    else if(newQuantity === 0){
+        deleteCartItems(currProductId);
+    }
+    else{
+        updateQuantity(currProductId,newQuantity);
+        updateCheckoutItemsTotal();
+        document.querySelector(`.js-cart-quantity-label-${currProductId}`).innerHTML = newQuantity;
+    } 
+}
+
+//Handle the change after clicking SAVE
 document.querySelectorAll('.js-save-quantity-link')
     .forEach((saveLinkBtn)=>{
         saveLinkBtn.addEventListener('click',()=>{
             const currProductId = saveLinkBtn.dataset.productId;
-            console.log(currProductId);
+            handleSaveQuantity(currProductId);
+        })
+    })
 
-            document.querySelector(`.js-cart-item-container-${currProductId}`)
-                .classList.remove('is-editing-quantity');
-
-            const inputQnty = Number(document.querySelector(`.js-quantity-input-${currProductId}`).value);
-            console.log(inputQnty);
-            
-
-            updateCheckoutItemsTotal();
+//Handle the change after clicking ENTER
+document.querySelectorAll('.js-quantity-input')
+    .forEach((inputArea)=>{
+        inputArea.addEventListener('keydown',(event)=>{
+            if(event.key === "Enter"){
+                const productId = inputArea.dataset.productId;
+                handleSaveQuantity(productId);
+            }
         })
     })
 

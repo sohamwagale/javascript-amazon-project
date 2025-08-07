@@ -54,3 +54,12 @@ export function calcTotalCartQuantity(){
 
     return cartTotalQuantity;
 }
+
+export function updateQuantity(productId,newQuantity){
+    const product = cart.find(item => item.productId === productId);
+    if(product){
+        product.quantity = newQuantity;
+    }
+    //console.log('Updated cart:', cart);
+    saveToLocalStorage();
+};
