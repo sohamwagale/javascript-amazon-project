@@ -41,8 +41,12 @@ cart.forEach((cartItem)=>{
                 <span>
                 Quantity: <span class="quantity-label">${cartItem.quantity}</span>
                 </span>
-                <span class="js-update-quantity-link link-primary" data-product-id="${productId}">
+                <span class="update-quantity-link js-update-quantity-link link-primary" data-product-id="${productId}">
                 Update
+                </span>
+                <input class = "quantity-input js-quantity-input-${productId}" type = 'number' min = '1'>
+                <span class = "link-primary save-quantity-link js-save-quantity-link" data-product-id = '${productId}'>
+                Save
                 </span>
                 <span class="delete-quantity-link link-primary js-delete-link" data-product-id=${productId/*matchingItem.id*/}>
                 Delete
@@ -131,5 +135,27 @@ document.querySelectorAll('.js-update-quantity-link')
         quantityUpdateLink.addEventListener('click',()=>{
             const currProductId = quantityUpdateLink.dataset.productId;
             console.log(currProductId);
+
+            document.querySelector(`.js-cart-item-container-${currProductId}`)
+                .classList.add('is-editing-quantity');
+
         }) 
     })
+
+document.querySelectorAll('.js-save-quantity-link')
+    .forEach((saveLinkBtn)=>{
+        saveLinkBtn.addEventListener('click',()=>{
+            const currProductId = saveLinkBtn.dataset.productId;
+            console.log(currProductId);
+
+            document.querySelector(`.js-cart-item-container-${currProductId}`)
+                .classList.remove('is-editing-quantity');
+
+            const inputQnty = Number(document.querySelector(`.js-quantity-input-${currProductId}`).value);
+            console.log(inputQnty);
+            
+
+            updateCheckoutItemsTotal();
+        })
+    })
+

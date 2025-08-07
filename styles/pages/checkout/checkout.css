@@ -119,6 +119,28 @@
   margin-left: 3px;
 }
 
+.quantity-input{
+  width: 30px;
+}
+
+.quantity-input,.save-quantity-link{
+  display: none;
+}
+
+.is-editing-quantity .quantity-input,
+.is-editing-quantity .save-quantity-link{
+  display: initial;
+}
+
+.is-editing-quantity .update-quantity-link{
+  display: none;
+}
+/*
+*   When .is-editing-quantity is added to the parent container, the 
+*   nested .quantity-input and .save-quantity-link become visible 
+*   again via CSS selector chaining.
+*/
+
 @media (max-width: 1000px) {
   .delivery-options {
     /* grid-column: 1 means this element will be placed
