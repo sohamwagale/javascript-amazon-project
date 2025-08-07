@@ -96,6 +96,7 @@ function calcTotalCartQuantity(){
 
     console.log(cartTotalQuantity);
 }
+calcTotalCartQuantity();
 
 document.querySelectorAll('.js-add-to-cart')//using for each because we wanna add event listener to all buttons
     .forEach((button)=>{
@@ -103,6 +104,7 @@ document.querySelectorAll('.js-add-to-cart')//using for each because we wanna ad
             const productId = button.dataset.productId;//the kebab case product-name is converted to camel case productName
 
             addToCart(productId);
+            console.log(cart);
 
             addedAnimation(productId);    
 
