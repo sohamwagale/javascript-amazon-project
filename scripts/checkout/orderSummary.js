@@ -1,6 +1,6 @@
 import { cart, removeFromCart, calcTotalCartQuantity, updateQuantity, updateDeliveryOption} from "../../data/cart.js"
-import { deliveryOptions } from "../../data/deliveryOptions.js";
-import { products } from "../../data/products.js";
+import { deliveryOptions, findDeliveryOption } from "../../data/deliveryOptions.js";
+import { findMatchingItem, products } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import  dayjs  from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; //Also known as default export
@@ -12,9 +12,6 @@ const today = dayjs();
 const deliveryDate = today.add(7,'days');
 console.log(deliveryDate.format('dddd, MMMM DD'));*/
 
-function findMatchingItem(productId){
-    return products.find(product => product.id === productId);
-}
 
 export function renderOrderSummary(){
 
@@ -34,13 +31,7 @@ export function renderOrderSummary(){
         //Delivery Date Selection
         const deliveryOptionId = cartItem.deliveryOptionId;
 
-        let deliveryOption;
-        deliveryOptions.forEach((option)=>{
-            if(option.id === deliveryOptionId){
-                deliveryOption = option;
-            }
-        });
-
+        const deliveryOption = findDeliveryOption(deliveryOptionId);
 
         const today = dayjs();
         const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
