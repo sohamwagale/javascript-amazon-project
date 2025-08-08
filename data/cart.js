@@ -1,5 +1,5 @@
 export let cart = JSON.parse(localStorage.getItem('cart')) || [
-    
+
 ];
 
 function saveToLocalStorage(){
@@ -66,3 +66,16 @@ export function updateQuantity(productId,newQuantity){
     //console.log('Updated cart:', cart);
     saveToLocalStorage();
 };
+
+
+export function updateDeliveryOption(productId, cartDeliveryOptionId){
+    const matchingCartItem = cart.find(cartItem => cartItem.productId === productId);
+    // let matchingItem;
+    // cart.forEach((cartItem)=>{
+    //     if(cartItem.productId === productId){
+    //         matchingItem = cartItem;
+    //     }
+    // })
+    matchingCartItem.deliveryOptionId = cartDeliveryOptionId;
+    saveToLocalStorage();
+}

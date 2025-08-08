@@ -1,4 +1,4 @@
-import { cart, removeFromCart, calcTotalCartQuantity, updateQuantity} from "../data/cart.js";
+import { cart, removeFromCart, calcTotalCartQuantity, updateQuantity, updateDeliveryOption} from "../data/cart.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
@@ -23,22 +23,22 @@ function findMatchingItem(productId){
 cart.forEach((cartItem)=>{
 
     const productId = cartItem.productId;
-
     const matchingItem = findMatchingItem(productId);
     
     //matchingItem.id === productId
 
     //console.log(matchingItem);
 
-    const deliveryOPtionId = cartItem.deliveryOptionId
+    //Delivery Date Selection
+    const deliveryOptionId = cartItem.deliveryOptionId;
 
     let deliveryOption;
-
     deliveryOptions.forEach((option)=>{
-        if(option.id === deliveryOPtionId){
+        if(option.id === deliveryOptionId){
             deliveryOption = option;
         }
     });
+
 
     const today = dayjs();
     const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
@@ -101,15 +101,18 @@ function deliveryOptionsHTML(productId,cartItem){
         );
         const dateString = deliveryDate.format('dddd, MMMM D');
 
-
         const priceString = deliveryOption.price === 0
             ? 'Free'
             : `$${formatCurrency(deliveryOption.price)} -`;
 
+
         const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
         html +=
         `
-        <div class="delivery-option">
+        <div class="delivery-option js-delivery-option" 
+            data-delivery-option-id ='${deliveryOption.id}' 
+            data-product-id = '${productId}'>
+
             <input type="radio"
             class="delivery-option-input"
             name="delivery-option-${productId}"
@@ -215,3 +218,12 @@ document.querySelectorAll('.js-quantity-input')
         })
     })
 
+//Event Listener For the Radio Buttons
+document.querySelectorAll('.js-delivery-option')
+    .forEach((deliveryOptionBtn)=>{
+        deliveryOptionBtn.addEventListener('click',()=>{
+            const deliveryOptionId = deliveryOptionBtn.dataset.deliveryOptionId;
+            const productId = deliveryOptionBtn.dataset.productId;
+            updateDeliveryOption(productId, deliveryOptionId);
+        });
+    })
