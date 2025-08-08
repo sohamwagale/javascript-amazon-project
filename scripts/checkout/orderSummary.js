@@ -4,6 +4,7 @@ import { findMatchingItem, products } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import  dayjs  from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; //Also known as default export
+import { renderPaymentSummary } from "./paymentSummary.js";
 //To use namedExport or default export is in the hands of the library maker
 /* 
 hello();
@@ -151,6 +152,7 @@ export function renderOrderSummary(){
             linkButton.addEventListener('click',()=>{
                 const currProductId = linkButton.dataset.productId;
                 deleteCartItems(currProductId);
+                renderPaymentSummary();
             })
         });
 
@@ -162,6 +164,8 @@ export function renderOrderSummary(){
 
                 document.querySelector(`.js-cart-item-container-${currProductId}`)
                     .classList.add('is-editing-quantity');
+
+                renderPaymentSummary();
             }); 
         });
 
@@ -197,6 +201,7 @@ export function renderOrderSummary(){
             saveLinkBtn.addEventListener('click',()=>{
                 const currProductId = saveLinkBtn.dataset.productId;
                 handleSaveQuantity(currProductId);
+                renderPaymentSummary();
             })
         })
 
@@ -207,6 +212,7 @@ export function renderOrderSummary(){
                 if(event.key === "Enter"){
                     const productId = inputArea.dataset.productId;
                     handleSaveQuantity(productId);
+                    renderPaymentSummary();
                 }
             })
         })
@@ -219,6 +225,7 @@ export function renderOrderSummary(){
                 const productId = deliveryOptionBtn.dataset.productId;
                 updateDeliveryOption(productId, deliveryOptionId);
                 renderOrderSummary();
+                renderPaymentSummary();
             });
         });
 
