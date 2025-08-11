@@ -1,9 +1,9 @@
 import { cart, removeFromCart, calcTotalCartQuantity, updateQuantity, updateDeliveryOption} from "../../data/cart.js"
-import { deliveryOptions, findDeliveryOption } from "../../data/deliveryOptions.js";
+import { deliveryOptions, findDeliveryOption ,calcDeliveryDate } from "../../data/deliveryOptions.js";
 import { findMatchingItem, products } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
-import  dayjs  from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; //Also known as default export
 import { renderPaymentSummary } from "./paymentSummary.js";
+import renderCheckoutHeader from '../checkout/checkoutHeader.js'
 //To use namedExport or default export is in the hands of the library maker
 
 export function renderOrderSummary(){
@@ -26,9 +26,8 @@ export function renderOrderSummary(){
 
         const deliveryOption = findDeliveryOption(deliveryOptionId);
 
-        const today = dayjs();
-        const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
-        const dateString = deliveryDate.format('dddd, MMMM D');
+        
+        const dateString = calcDeliveryDate(deliveryOption); 
 
         orderSummaryHTML += 
         `
@@ -80,12 +79,7 @@ export function renderOrderSummary(){
         let html = ``;
 
         deliveryOptions.forEach((deliveryOption)=>{
-            const  today = dayjs();
-            const deliveryDate = today.add(
-                deliveryOption.deliveryDays,
-                'days'
-            );
-            const dateString = deliveryDate.format('dddd, MMMM D');
+            const dateString =  calcDeliveryDate(deliveryOption);
 
             const priceString = deliveryOption.price === 0
                 ? 'Free'
@@ -121,21 +115,23 @@ export function renderOrderSummary(){
 
 
     //Update checkout Items function
-    function updateCheckoutItemsTotal(){
-        document.querySelector('.js-checkout-items')
-            .innerHTML = `${calcTotalCartQuantity()} items`;
-    }
-    updateCheckoutItemsTotal(); //Call it once when the page is loaded
+    // function updateCheckoutItemsTotal(){
+    //     document.querySelector('.js-checkout-items')
+    //         .innerHTML = `${calcTotalCartQuantity()} items`;
+    // }
+    renderCheckoutHeader();
+    //updateCheckoutItemsTotal(); //Call it once when the page is loaded
 
 
     //Delete Cart Items
     function deleteCartItems(currProductId){
         removeFromCart(currProductId);
-        const deleteProductHTML = document.querySelector(
-            `.js-cart-item-container-${currProductId}`
-        );
-        deleteProductHTML.remove();
-        updateCheckoutItemsTotal();
+        // const deleteProductHTML = document.querySelector(
+        //     `.js-cart-item-container-${currProductId}`
+        // );
+        // deleteProductHTML.remove();
+        renderOrderSummary();
+        // updateCheckoutItemsTotal();
     }
 
     //Link to delete items
@@ -157,7 +153,7 @@ export function renderOrderSummary(){
                 document.querySelector(`.js-cart-item-container-${currProductId}`)
                     .classList.add('is-editing-quantity');
 
-                renderPaymentSummary();
+                // renderPaymentSummary();
             }); 
         });
 
@@ -182,8 +178,10 @@ export function renderOrderSummary(){
         }
         else{
             updateQuantity(currProductId,newQuantity);
-            updateCheckoutItemsTotal();
-            document.querySelector(`.js-cart-quantity-label-${currProductId}`).innerHTML = newQuantity;
+            renderOrderSummary();
+            renderPaymentSummary();
+            // updateCheckoutItemsTotal();
+            // document.querySelector(`.js-cart-quantity-label-${currProductId}`).innerHTML = newQuantity;
         } 
     }
 
@@ -192,8 +190,7 @@ export function renderOrderSummary(){
         .forEach((saveLinkBtn)=>{
             saveLinkBtn.addEventListener('click',()=>{
                 const currProductId = saveLinkBtn.dataset.productId;
-                handleSaveQuantity(currProductId);
-                renderPaymentSummary();
+                handleSaveQuantity(currProductId);   
             })
         })
 
