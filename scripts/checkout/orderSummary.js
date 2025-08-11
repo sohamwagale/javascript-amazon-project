@@ -2,17 +2,9 @@ import { cart, removeFromCart, calcTotalCartQuantity, updateQuantity, updateDeli
 import { deliveryOptions, findDeliveryOption } from "../../data/deliveryOptions.js";
 import { findMatchingItem, products } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
-import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import  dayjs  from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; //Also known as default export
 import { renderPaymentSummary } from "./paymentSummary.js";
 //To use namedExport or default export is in the hands of the library maker
-/* 
-hello();
-
-const today = dayjs();
-const deliveryDate = today.add(7,'days');
-console.log(deliveryDate.format('dddd, MMMM DD'));*/
-
 
 export function renderOrderSummary(){
 
