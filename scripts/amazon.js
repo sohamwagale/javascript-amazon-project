@@ -99,7 +99,10 @@ document.querySelectorAll('.js-add-to-cart')//using for each because we wanna ad
         button.addEventListener('click',()=>{
             const productId = button.dataset.productId;//the kebab case product-name is converted to camel case productName
 
-            addToCart(productId);
+            const selectedQuantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+            addToCart(productId,selectedQuantity);
+            // addToCart(productId);
+
             console.log(cart);
 
             addedAnimation(productId);    
