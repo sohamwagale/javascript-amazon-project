@@ -31,7 +31,7 @@ export function renderOrderSummary(){
 
         orderSummaryHTML += 
         `
-        <div class="cart-item-container js-cart-item-container-${productId}">
+        <div class="cart-item-container js-cart-item-container js-cart-item-container-${productId}">
             <div class="delivery-date">
                 Delivery date: ${dateString}
             </div>
@@ -47,7 +47,7 @@ export function renderOrderSummary(){
                 <div class="product-price">
                     $${formatCurrency(matchingItem.price)}
                 </div>
-                <div class="product-quantity">
+                <div class="product-quantity js-product-quantity-${productId}">
                     <span>
                     Quantity: <span class="quantity-label js-cart-quantity-label-${productId}">${cartItem.quantity}</span>
                     </span>
@@ -58,7 +58,7 @@ export function renderOrderSummary(){
                     <span class = "link-primary save-quantity-link js-save-quantity-link" data-product-id = '${productId}'>
                     Save
                     </span>
-                    <span class="delete-quantity-link link-primary js-delete-link" data-product-id=${productId/*matchingItem.id*/}>
+                    <span class="delete-quantity-link js-delete-link-${productId} link-primary js-delete-link" data-product-id=${productId/*matchingItem.id*/}>
                     Delete
                     </span>
                 </div>
@@ -119,7 +119,7 @@ export function renderOrderSummary(){
     //     document.querySelector('.js-checkout-items')
     //         .innerHTML = `${calcTotalCartQuantity()} items`;
     // }
-    renderCheckoutHeader();
+    // renderCheckoutHeader();
     //updateCheckoutItemsTotal(); //Call it once when the page is loaded
 
 
