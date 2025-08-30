@@ -92,6 +92,48 @@ export class Clothing extends Product{
 //     ]
 //   });
 
+// const obj1 = {
+//   a: 10,
+//   b: this.a
+// }
+// This point of time object has not been created yet but allowed in methods
+
+
+/*
+function logThis(){
+  console.log(this); // Undefined
+}
+
+logThis();
+logThis.call('Hello'); // First parameter is the value of THIS
+
+const obj3 = {
+  method : ()=>{
+    console.log(this); // Still undefined as this
+    //  does not change the value whne inside a arrow function
+    // But if it wasnt arrow function it will point to the object in which the method resides
+  }
+}
+
+const obj4 = {
+  method(){
+    console.log(this);
+
+    [1,2,3].forEach(()=>{
+      console.log(this); //  In this case this points to the thing it was pointing before the arrow function
+    })
+  }
+}
+
+obj3.method();
+
+
+const date =  new Date()
+console.log(date)
+console.log(date.toLocaleTimeString())
+
+*/
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
