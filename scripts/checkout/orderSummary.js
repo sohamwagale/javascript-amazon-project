@@ -180,6 +180,7 @@ export function renderOrderSummary(){
             updateQuantity(currProductId,newQuantity);
             renderOrderSummary();
             renderPaymentSummary();
+            renderCheckoutHeader();
             // updateCheckoutItemsTotal();
             // document.querySelector(`.js-cart-quantity-label-${currProductId}`).innerHTML = newQuantity;
         } 
