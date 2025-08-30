@@ -84,7 +84,7 @@ const businessCart = new Cart('cart-busines');
 // cart.loadFromStorage();
 // businessCart.loadFromStorage();
 
-cart.addToCart("e43638ce-6aa0-4b85-b27f-e1d07eb678c6",2)
-console.log(cart.cartItems)
+// cart.addToCart("e43638ce-6aa0-4b85-b27f-e1d07eb678c6",2)
+// console.log(cart.cartItems)
 
-console.log(businessCart instanceof Cart);
+// console.log(businessCart instanceof Cart);
