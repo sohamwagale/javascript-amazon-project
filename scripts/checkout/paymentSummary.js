@@ -1,4 +1,5 @@
-import { calcTotalCartQuantity, cart } from "../../data/cart.js";
+//import { calcTotalCartQuantity, cart } from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 import { findDeliveryOption } from "../../data/deliveryOptions.js";
 import { findMatchingItem } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
@@ -7,7 +8,7 @@ export function renderPaymentSummary(){
     let productPrice = 0;
     let shippingPrice = 0;
 
-    cart.forEach((carItem)=>{
+    cart.cartItems.forEach((carItem)=>{
         const product = findMatchingItem(carItem.productId);
         productPrice += product.price * carItem.quantity;
 
@@ -29,7 +30,7 @@ export function renderPaymentSummary(){
     </div>
 
     <div class="payment-summary-row">
-    <div>Items (${calcTotalCartQuantity()}):</div>
+    <div>Items (${cart.calcTotalCartQuantity()}):</div>
     <div class="payment-summary-money">$${formatCurrency(productPrice)}</div>
     </div>
 

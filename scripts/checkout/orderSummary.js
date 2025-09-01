@@ -1,4 +1,5 @@
-import { cart, removeFromCart, calcTotalCartQuantity, updateQuantity, updateDeliveryOption} from "../../data/cart.js"
+//import { cart, removeFromCart, calcTotalCartQuantity, updateQuantity, updateDeliveryOption} from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 import { deliveryOptions, findDeliveryOption ,calcDeliveryDate } from "../../data/deliveryOptions.js";
 import { findMatchingItem, products } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
@@ -12,7 +13,7 @@ export function renderOrderSummary(){
     const orderSummary =  document.querySelector('.js-order-summary');
 
     //Generates the HTML for all cart items.
-    cart.forEach((cartItem)=>{
+    cart.cartItems.forEach((cartItem)=>{
 
         const productId = cartItem.productId;
         const matchingItem = findMatchingItem(productId);
@@ -125,7 +126,7 @@ export function renderOrderSummary(){
 
     //Delete Cart Items
     function deleteCartItems(currProductId){
-        removeFromCart(currProductId);
+        cart.removeFromCart(currProductId);
         // const deleteProductHTML = document.querySelector(
         //     `.js-cart-item-container-${currProductId}`
         // );
@@ -141,6 +142,7 @@ export function renderOrderSummary(){
                 const currProductId = linkButton.dataset.productId;
                 deleteCartItems(currProductId);
                 renderPaymentSummary();
+                renderCheckoutHeader();
             })
         });
 
@@ -177,7 +179,7 @@ export function renderOrderSummary(){
             deleteCartItems(currProductId);
         }
         else{
-            updateQuantity(currProductId,newQuantity);
+            cart.updateQuantity(currProductId,newQuantity);
             renderOrderSummary();
             renderPaymentSummary();
             renderCheckoutHeader();
@@ -213,7 +215,7 @@ export function renderOrderSummary(){
             deliveryOptionBtn.addEventListener('click',()=>{
                 const deliveryOptionId = deliveryOptionBtn.dataset.deliveryOptionId;
                 const productId = deliveryOptionBtn.dataset.productId;
-                updateDeliveryOption(productId, deliveryOptionId);
+                cart.updateDeliveryOption(productId, deliveryOptionId);
                 renderOrderSummary();
                 renderPaymentSummary();
             });

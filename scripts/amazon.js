@@ -1,4 +1,5 @@
-import {cart, addToCart ,calcTotalCartQuantity} from '../data/cart.js';
+//import {cart, addToCart ,calcTotalCartQuantity} from '../data/cart.js';
+import { cart } from '../data/cart-class.js';
 import {Clothing, products} from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -92,7 +93,7 @@ function addedAnimation(productId){
 
 function updateTotalCartQuantity(){
     document.querySelector('.js-cart-total-quantity')
-        .innerHTML = calcTotalCartQuantity();
+        .innerHTML = cart.calcTotalCartQuantity();
 }
 
 updateTotalCartQuantity();
@@ -103,7 +104,7 @@ document.querySelectorAll('.js-add-to-cart')//using for each because we wanna ad
             const productId = button.dataset.productId;//the kebab case product-name is converted to camel case productName
 
             const selectedQuantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
-            addToCart(productId,selectedQuantity);
+            cart.addToCart(productId,selectedQuantity);
             // addToCart(productId);
 
             console.log(cart);
