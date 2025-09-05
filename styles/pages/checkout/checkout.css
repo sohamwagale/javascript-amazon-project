@@ -109,7 +109,7 @@
   margin-bottom: 8px;
 }
 
-.product-price {
+.product-priceCents {
   color: rgb(177, 39, 4);
   font-weight: 700;
   margin-bottom: 5px;
@@ -179,7 +179,7 @@
   margin-bottom: 3px;
 }
 
-.delivery-option-price {
+.delivery-option-priceCents {
   color: rgb(120, 120, 120);
   font-size: 15px;
 }

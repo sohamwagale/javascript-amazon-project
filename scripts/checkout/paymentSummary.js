@@ -5,23 +5,23 @@ import { findMatchingItem } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 
 export function renderPaymentSummary(){
-    let productPrice = 0;
-    let shippingPrice = 0;
+    let productpriceCents = 0;
+    let shippingpriceCents = 0;
 
     cart.cartItems.forEach((carItem)=>{
         const product = findMatchingItem(carItem.productId);
-        productPrice += product.price * carItem.quantity;
+        productpriceCents += product.priceCents * carItem.quantity;
 
         const deliveryOption = findDeliveryOption(carItem.deliveryOptionId);
-        shippingPrice += deliveryOption.price;
+        shippingpriceCents += deliveryOption.priceCents;
     });
 
-    // console.log(productPrice);
-    // console.log(shippingPrice);
+    // console.log(productpriceCents);
+    // console.log(shippingpriceCents);
 
-    const totalBeforeTax = shippingPrice + productPrice;
+    const totalBeforeTax = shippingpriceCents + productpriceCents;
     const tax = totalBeforeTax * 0.1;
-    const totalPrice = totalBeforeTax + tax;
+    const totalpriceCents = totalBeforeTax + tax;
 
     const paymentSummaryHTML = 
     `
@@ -31,12 +31,12 @@ export function renderPaymentSummary(){
 
     <div class="payment-summary-row">
     <div>Items (${cart.calcTotalCartQuantity()}):</div>
-    <div class="payment-summary-money">$${formatCurrency(productPrice)}</div>
+    <div class="payment-summary-money">$${formatCurrency(productpriceCents)}</div>
     </div>
 
     <div class="payment-summary-row">
     <div>Shipping &amp; handling:</div>
-    <div class="payment-summary-money">$${formatCurrency(shippingPrice)}</div>
+    <div class="payment-summary-money">$${formatCurrency(shippingpriceCents)}</div>
     </div>
 
     <div class="payment-summary-row subtotal-row">
@@ -51,7 +51,7 @@ export function renderPaymentSummary(){
 
     <div class="payment-summary-row total-row">
     <div>Order total:</div>
-    <div class="payment-summary-money">$${formatCurrency(totalPrice)}</div>
+    <div class="payment-summary-money">$${formatCurrency(totalpriceCents)}</div>
     </div>
 
     <button class="place-order-button button-primary">
