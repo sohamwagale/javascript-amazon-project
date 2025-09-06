@@ -22,22 +22,40 @@ new Promise(()=>{
 */
 
 async function loadPage(){ // Makes the function return a promise
-    console.log('Load Page');
+    // console.log('Load Page');
 
-    await loadProductsFetch();
+    try { // Can be used in normal code tooo
+        //The moment it detects an error, it skips the code after it directly jumps to the catch 
 
-    await loadCartFetch();
-    // const value = await new Promise((resolve)=>{
-    //     loadCart(()=>{
-    //         resolve('Value gets returned');
-    //     })
-    // })
+        // We can manually throw errors
+        // throw 'error 1 created manually';
+
+        await loadProductsFetch();
+        await loadCartFetch();
+
+        // const value = await new Promise((resolve,reject)=>{
+
+        //     // throw 'manually created error inside a promise using await keyword'
+        //     // to throw the error syncronously
+
+        //     // Goes to catch{} instead of .catch() because of the await keyword
+        //     loadCart(()=>{
+        //         resolve('Value gets returned');
+        //         // reject('Error 3'); // to throw error in the future asyncronously
+        //     });
+        // });
+
+    } catch (error){
+        console.log("Errorrrrr")
+        console.error(error)
+    }
+
 
     renderCheckoutHeader();
     renderOrderSummary();
     renderPaymentSummary();
 
-    return 'Value 1' // works as the resolve('Value 1') in promises
+    // return 'Value 1' // works as the resolve('Value 1') in promises
 }
 
 loadPage();
