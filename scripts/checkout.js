@@ -21,16 +21,48 @@ new Promise(()=>{
 })
 */
 
+async function loadPage(){ // Makes the function return a promise
+    console.log('Load Page');
+
+    await loadProductsFetch();
+
+    await loadCartFetch();
+    // const value = await new Promise((resolve)=>{
+    //     loadCart(()=>{
+    //         resolve('Value gets returned');
+    //     })
+    // })
+
+    renderCheckoutHeader();
+    renderOrderSummary();
+    renderPaymentSummary();
+
+    return 'Value 1' // works as the resolve('Value 1') in promises
+}
+
+loadPage();
+
+// loadPage().then((value)=>{
+//     console.log('Next step in loading the page');
+//     console.log(value);
+// })
+
+// Await - lets us wait for thr promise to finish, before going to the next line
+
+
 //The two promises are run seperately on two different threads
+
+/*
 Promise.all([
-    new Promise((resolve)=>{
-        // loadProducts(()=>{
-        //     resolve('value 1');
-        // });
-        loadProductsFetch().then(()=>{
-            resolve();
-        });
-    }),
+    // new Promise((resolve)=>{
+    //     // loadProducts(()=>{
+    //     //     resolve('value 1');
+    //     // });
+    //     loadProductsFetch().then(()=>{
+    //         resolve();
+    //     });
+    // }),
+    loadProductsFetch(),
     new Promise((resolve)=>{
         loadCartFetch().then(()=>{
             resolve();
@@ -43,7 +75,7 @@ Promise.all([
     renderOrderSummary();
     renderPaymentSummary();
 })
-
+*/
 
 
 // new Promise((resolve)=>{
