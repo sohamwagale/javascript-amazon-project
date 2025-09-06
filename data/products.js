@@ -155,12 +155,15 @@ console.log(date.toLocaleTimeString())
 
 export let products = []
 
-export function loadProducts(fun){
-  const xhr = new XMLHttpRequest();
-
-  xhr.addEventListener('load',()=>{
-    //console.log(xhr.response);
-    products = JSON.parse(xhr.response).map((productDetails)=>{
+export function loadProductsFetch(){
+  const promise = fetch('https://supersimplebackend.dev/products').then((response)=>{// Uses a promise to wait for the response
+    console.log(response);
+    return response.json() //Return a promise → you get a container that will eventually give you the value (or an error).
+  }).then((data)=>{
+    console.log(data[1].name);
+    return data
+  }).then((productsData)=>{
+    products = productsData.map((productDetails)=>{
       if(productDetails.type === 'clothing'){
         return new Clothing(productDetails);
       }
@@ -170,13 +173,37 @@ export function loadProducts(fun){
       return new Product(productDetails);
         });
     console.log('load products');
-
-    fun();
   })
-
-  xhr.open('GET','https://supersimplebackend.dev/products');
-  xhr.send();
+  return promise;
 }
+
+// loadProductsFetch().then(()=>{
+//   console.log('next step')
+// });
+
+
+// export function loadProducts(fun){
+//   const xhr = new XMLHttpRequest();
+
+//   xhr.addEventListener('load',()=>{
+//     //console.log(xhr.response);
+//     products = JSON.parse(xhr.response).map((productDetails)=>{
+//       if(productDetails.type === 'clothing'){
+//         return new Clothing(productDetails);
+//       }
+//       if(productDetails.type === 'appliance'){
+//         return new Appliance(productDetails);
+//       }
+//       return new Product(productDetails);
+//         });
+//     console.log('load products');
+
+//     fun();
+//   })
+
+//   xhr.open('GET','https://supersimplebackend.dev/products');
+//   xhr.send();
+// }
 
 // loadProducts();
 

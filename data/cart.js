@@ -85,14 +85,24 @@ export function updateDeliveryOption(productId, cartDeliveryOptionId){
     saveToLocalStorage();
 }
 
-export function loadCart(fun){
-  const xhr = new XMLHttpRequest();
+// export function loadCart(fun){
+//   const xhr = new XMLHttpRequest();
 
-  xhr.addEventListener('load',()=>{
-    console.log(xhr.response);
-    fun();
-  })
+//   xhr.addEventListener('load',()=>{
+//     console.log(xhr.response);
+//     fun();
+//   })
 
-  xhr.open('GET','https://supersimplebackend.dev/cart');
-  xhr.send();
+//   xhr.open('GET','https://supersimplebackend.dev/cart');
+//   xhr.send();
+// }
+
+export function loadCartFetch(){
+    const cart_promise = fetch('https://supersimplebackend.dev/cart').then((response)=>{
+        return response.text();
+    }).then((responseJSON)=>{
+        console.log(responseJSON);
+    })
+
+    return cart_promise;
 }

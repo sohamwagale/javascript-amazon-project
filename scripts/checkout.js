@@ -2,8 +2,8 @@ import renderCheckoutHeader from "./checkout/checkoutHeader.js";
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import '../data/cart-class.js';
-import { loadProducts } from "../data/products.js";
-import { loadCart } from "../data/cart.js";
+import { /*loadProducts,*/ loadProductsFetch } from "../data/products.js";
+import { /*loadCart,*/ loadCartFetch } from "../data/cart.js";
 
 
 
@@ -21,16 +21,19 @@ new Promise(()=>{
 })
 */
 
-
+//The two promises are run seperately on two different threads
 Promise.all([
     new Promise((resolve)=>{
-        loadProducts(()=>{
-            resolve('value 1');
+        // loadProducts(()=>{
+        //     resolve('value 1');
+        // });
+        loadProductsFetch().then(()=>{
+            resolve();
         });
     }),
     new Promise((resolve)=>{
-        loadCart(()=>{
-            resolve('value 2');
+        loadCartFetch().then(()=>{
+            resolve();
         })
     })
 
@@ -48,7 +51,7 @@ Promise.all([
 //         resolve('Value 1');// Whateverwe give to resolve is gonna be saved for next 'Then' parameter
 //     });
 // }).then((value_1)=>{
-//     return new Promise((resolve)=>{
+//     return new Promise((resolve)=>{ // return keyword used to pass it to another 'then' function
 //         loadCart(()=>{
 //             resolve(); // It wont move to the next step unless the resolve function is called
 //             console.log(value_1)
