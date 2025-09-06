@@ -110,7 +110,7 @@ function renderProductsGrid(){
                 cart.addToCart(productId,selectedQuantity);
                 // addToCart(productId);
 
-                console.log(cart);
+                // console.log(cart);
 
                 addedAnimation(productId);    
 
