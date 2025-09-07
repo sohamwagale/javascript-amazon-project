@@ -18,8 +18,8 @@ function renderOrders(){
 
   let orderContainerHTML = '';
   orders.forEach(order => {
-
-    let productDetail = ``
+    console.log(orders)
+    let productDetail = ``;
     order.products.forEach(product => {
       let prod = findMatchingItem(product.productId);
       productDetail +=`
@@ -78,9 +78,7 @@ function renderOrders(){
       </div>
     `
   });
-
-    console.log(orders)
-    document.querySelector('.order-container-js').innerHTML = orderContainerHTML;
+  document.querySelector('.order-container-js').innerHTML = orderContainerHTML;
 
   document.querySelectorAll('.buy-again-button-js')
     .forEach((butt)=>{

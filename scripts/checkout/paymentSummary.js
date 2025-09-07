@@ -59,8 +59,9 @@ export function renderPaymentSummary(){
     document.querySelector('.js-payment-summary')
         .innerHTML = paymentSummaryHTML;
 
-    document.querySelector('.js-place-button')
-        .addEventListener('click',async ()=>{
+    const placeButt = document.querySelector('.js-place-button');
+        
+    placeButt.addEventListener('click',async ()=>{
 
             try {
                 const response = await fetch('https://supersimplebackend.dev/orders',{
@@ -74,9 +75,11 @@ export function renderPaymentSummary(){
                 });
                 
                 const order  = await response.json()
-                console.log(order);
-
                 addOrder(order);
+
+                cart.cartItems.slice().forEach((cartItem)=>{
+                    cart.removeFromCart(cartItem.productId)
+                })
 
             } catch (error) {
                 console.log('Unexpected error')
@@ -85,4 +88,10 @@ export function renderPaymentSummary(){
             window.location.href = 'orders.html'
             
         })
+
+    function updatePlaceButton() {
+        placeButt.disabled = (cart.cartItems.length === 0);
+    }
+
+    updatePlaceButton();
 }
