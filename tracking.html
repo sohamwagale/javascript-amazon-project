@@ -19,36 +19,8 @@
     <link rel="stylesheet" href="styles/pages/tracking.css">
   </head>
   <body>
-    <div class="amazon-header">
-      <div class="amazon-header-left-section">
-        <a href="amazon.html" class="header-link">
-          <img class="amazon-logo"
-            src="images/amazon-logo-white.png">
-          <img class="amazon-mobile-logo"
-            src="images/amazon-mobile-logo-white.png">
-        </a>
-      </div>
+    <div class="amazon-header amazon-header-js">
 
-      <div class="amazon-header-middle-section">
-        <input class="search-bar" type="text" placeholder="Search">
-
-        <button class="search-button">
-          <img class="search-icon" src="images/icons/search-icon.png">
-        </button>
-      </div>
-
-      <div class="amazon-header-right-section">
-        <a class="orders-link header-link" href="orders.html">
-          <span class="returns-text">Returns</span>
-          <span class="orders-text">& Orders</span>
-        </a>
-
-        <a class="cart-link header-link" href="checkout.html">
-          <img class="cart-icon" src="images/icons/cart-icon.png">
-          <div class="cart-quantity">3</div>
-          <div class="cart-text">Cart</div>
-        </a>
-      </div>
     </div>
 
     <div class="main">
@@ -57,43 +29,31 @@
           View all orders
         </a>
 
-        <div class="delivery-date">
-          Arriving on Monday, June 13
+        <div class="delivery-date delivery-date-js"></div>
+
+        <div class="product-info product-info-js">
         </div>
 
-        <div class="product-info">
-          Black and Gray Athletic Cotton Socks - 6 Pairs
+        <div class="product-info product-quantity-js">
         </div>
 
-        <div class="product-info">
-          Quantity: 1
-        </div>
-
-        <img class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
+        <span class="product-image-js">
+          <img class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
+        </span>
 
         <div class="progress-labels-container">
-          <div class="progress-label">
-            Preparing
-          </div>
-          <div class="progress-label current-status">
-            Shipped
-          </div>
-          <div class="progress-label">
-            Delivered
-          </div>
+          <div class="progress-label" data-status="Preparing">Preparing</div>
+          <div class="progress-label" data-status="Shipped">Shipped</div>
+          <div class="progress-label" data-status="Delivered">Delivered</div>
         </div>
 
         <div class="progress-bar-container">
           <div class="progress-bar"></div>
         </div>
+        
       </div>
     </div>
 
-    <script>
-      const url = new URL(window.location.href);
-      const orderId = url.searchParams.get('orderId');
-      console.log(orderId)
-      console.log(url.searchParams.get('productId'))
-    </script>
+    <script src="scripts/tracking.js" type="module"></script>
   </body>
 </html>

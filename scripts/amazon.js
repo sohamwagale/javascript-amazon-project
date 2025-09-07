@@ -1,7 +1,9 @@
 import { cart } from '../data/cart.js';
 import {products, loadProductsFetch} from '../data/products.js';
+import { renderAmazonHeader , updateTotalCartQuantity } from './amazon-header.js';
 
 loadProductsFetch().then(()=>{
+    renderAmazonHeader();
     renderProductsGrid();
 })
 
@@ -81,12 +83,6 @@ function renderProductsGrid(){
         },2000);
 
         addedMessageTimeouts[productId] = addedDisplayTimeoutId;
-    }
-
-
-    function updateTotalCartQuantity(){
-        document.querySelector('.js-cart-total-quantity')
-            .innerHTML = cart.calcTotalCartQuantity();
     }
 
     updateTotalCartQuantity();
