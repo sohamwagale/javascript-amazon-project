@@ -30,8 +30,13 @@ async function loadPage(){ // Makes the function return a promise
         // We can manually throw errors
         // throw 'error 1 created manually';
 
-        await loadProductsFetch();
-        await loadCartFetch();
+        // await loadProductsFetch();
+        // await loadCartFetch();
+
+        await Promise.all([
+            loadCartFetch(),
+            loadProductsFetch()
+        ])
 
         // const value = await new Promise((resolve,reject)=>{
 
