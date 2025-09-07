@@ -1,17 +1,6 @@
-//import {cart, addToCart ,calcTotalCartQuantity} from '../data/cart.js';
-import { cart } from '../data/cart-class.js';
-import {products, /*loadProducts,*/ loadProductsFetch} from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
+import { cart } from '../data/cart.js';
+import {products, loadProductsFetch} from '../data/products.js';
 
-
-/**
- * import * as cartModule from '../data/cart.js';
- * 
- * cartModule.cart
- * cartModule.addToCart('id');
- */
-
-// loadProducts(renderProductsGrid);
 loadProductsFetch().then(()=>{
     renderProductsGrid();
 })
@@ -83,7 +72,6 @@ function renderProductsGrid(){
         addedDisplay.classList.add('added-to-cart-visible');
 
         const previousTimeoutId = addedMessageTimeouts[productId];
-        //hya productId che kahi previous timeouts asle tar te clear karayche
         if(previousTimeoutId){
             clearTimeout(previousTimeoutId)
         }
@@ -93,7 +81,6 @@ function renderProductsGrid(){
         },2000);
 
         addedMessageTimeouts[productId] = addedDisplayTimeoutId;
-        //nantar tyach productId la navin timeoutId assign karaycha override karun
     }
 
 
@@ -104,19 +91,14 @@ function renderProductsGrid(){
 
     updateTotalCartQuantity();
 
-    document.querySelectorAll('.js-add-to-cart')//using for each because we wanna add event listener to all buttons
+    document.querySelectorAll('.js-add-to-cart')
         .forEach((button)=>{
             button.addEventListener('click',()=>{
-                const productId = button.dataset.productId;//the kebab case product-name is converted to camel case productName
-
+                const productId = button.dataset.productId;
                 const selectedQuantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+
                 cart.addToCart(productId,selectedQuantity);
-                // addToCart(productId);
-
-                // console.log(cart);
-
                 addedAnimation(productId);    
-
                 updateTotalCartQuantity();
             })
         });

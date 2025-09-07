@@ -1,33 +1,21 @@
-//import { cart, removeFromCart, calcTotalCartQuantity, updateQuantity, updateDeliveryOption} from "../../data/cart.js";
-import { cart } from "../../data/cart-class.js";
+import { cart } from "../../data/cart.js";
 import { deliveryOptions, findDeliveryOption ,calcDeliveryDate } from "../../data/deliveryOptions.js";
 import { findMatchingItem, products } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 import renderCheckoutHeader from '../checkout/checkoutHeader.js'
-//To use namedExport or default export is in the hands of the library maker
 
 export function renderOrderSummary(){
 
     let orderSummaryHTML = ``;
     const orderSummary =  document.querySelector('.js-order-summary');
 
-    //Generates the HTML for all cart items.
     cart.cartItems.forEach((cartItem)=>{
 
         const productId = cartItem.productId;
         const matchingItem = findMatchingItem(productId);
-        
-        //matchingItem.id === productId
-
-        //console.log(matchingItem);
-
-        //Delivery Date Selection
         const deliveryOptionId = cartItem.deliveryOptionId;
-
         const deliveryOption = findDeliveryOption(deliveryOptionId);
-
-        
         const dateString = calcDeliveryDate(deliveryOption); 
 
         orderSummaryHTML += 
@@ -115,24 +103,10 @@ export function renderOrderSummary(){
     orderSummary.innerHTML = orderSummaryHTML;
 
 
-    //Update checkout Items function
-    // function updateCheckoutItemsTotal(){
-    //     document.querySelector('.js-checkout-items')
-    //         .innerHTML = `${calcTotalCartQuantity()} items`;
-    // }
-    // renderCheckoutHeader();
-    //updateCheckoutItemsTotal(); //Call it once when the page is loaded
-
-
     //Delete Cart Items
     function deleteCartItems(currProductId){
         cart.removeFromCart(currProductId);
-        // const deleteProductHTML = document.querySelector(
-        //     `.js-cart-item-container-${currProductId}`
-        // );
-        // deleteProductHTML.remove();
         renderOrderSummary();
-        // updateCheckoutItemsTotal();
     }
 
     //Link to delete items
@@ -154,15 +128,8 @@ export function renderOrderSummary(){
 
                 document.querySelector(`.js-cart-item-container-${currProductId}`)
                     .classList.add('is-editing-quantity');
-
-                // renderPaymentSummary();
             }); 
         });
-
-
-    //dataset used to get which element or button was clicked (READ)
-    //whereas class = '{productId}' used to target a specific element (WRITE)
-
 
     //To handle and changes in Quantity
     function handleSaveQuantity(currProductId){
@@ -183,8 +150,6 @@ export function renderOrderSummary(){
             renderOrderSummary();
             renderPaymentSummary();
             renderCheckoutHeader();
-            // updateCheckoutItemsTotal();
-            // document.querySelector(`.js-cart-quantity-label-${currProductId}`).innerHTML = newQuantity;
         } 
     }
 
@@ -222,5 +187,3 @@ export function renderOrderSummary(){
         });
 
 };
-
-//MVC Model-> View -> Controller -> Model

@@ -1,4 +1,4 @@
-import  dayjs  from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; //Also known as default export
+import  dayjs  from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; 
 
 export function findDeliveryOption(deliveryOptionId){
     let deliveryOption;
@@ -28,7 +28,6 @@ export function calcDeliveryDate(deliveryOption){
             daysToAdd--;
         }
     }
-    // const deliveryDate = today.add( daysToAdd ,'days');
     return deliveryDate.format('dddd, MMMM D');
 }
 

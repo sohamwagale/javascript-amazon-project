@@ -1,5 +1,4 @@
-// import { calcTotalCartQuantity } from "../../data/cart.js";
-import { cart } from "../../data/cart-class.js";
+import { cart } from "../../data/cart.js";
 
 export default function renderCheckoutHeader(){
     document.querySelector('.js-header-middle')

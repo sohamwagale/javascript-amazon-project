@@ -1,5 +1,4 @@
-//import { calcTotalCartQuantity, cart } from "../../data/cart.js";
-import { cart } from "../../data/cart-class.js";
+import { cart } from "../../data/cart.js";
 import { findDeliveryOption } from "../../data/deliveryOptions.js";
 import { findMatchingItem } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
@@ -16,9 +15,6 @@ export function renderPaymentSummary(){
         const deliveryOption = findDeliveryOption(carItem.deliveryOptionId);
         shippingpriceCents += deliveryOption.priceCents;
     });
-
-    // console.log(productpriceCents);
-    // console.log(shippingpriceCents);
 
     const totalBeforeTax = shippingpriceCents + productpriceCents;
     const tax = totalBeforeTax * 0.1;
