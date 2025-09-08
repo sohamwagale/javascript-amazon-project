@@ -5,6 +5,7 @@ import { loadProductsFetch } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { formatDate } from "./utils/date.js";
 import { cart } from "../data/cart.js";
+// import { progress } from "./tracking.js";
 
 async function ordersPageRender() {
   renderAmazonHeader();
@@ -14,12 +15,20 @@ async function ordersPageRender() {
 }
 ordersPageRender();
 
+
+function isNotDel(delDate){
+  const curr = new Date();
+  const delivDate = new Date(delDate);
+  console.log(delivDate,curr)
+  return (delivDate>curr)
+}
+
 function renderOrders(){
 
   let orderContainerHTML = '';
   orders.forEach(order => {
-    console.log(orders)
-    let productDetail = ``;
+
+    let productDetail = ``
     order.products.forEach(product => {
       let prod = findMatchingItem(product.productId);
       productDetail +=`
@@ -31,7 +40,7 @@ function renderOrders(){
             ${prod.name}
           </div>
           <div class="product-delivery-date">
-            Arriving on: ${formatDate(product.estimatedDeliveryTime)}
+            ${isNotDel(product.estimatedDeliveryTime)? "Arriving" : "Delivered"} on: ${formatDate(product.estimatedDeliveryTime)}
           </div>
           <div class="product-quantity">
             Quantity: ${product.quantity}
@@ -45,7 +54,7 @@ function renderOrders(){
           <a href="tracking.html?orderId=${order.id}&prodId=${prod.id}">
             <!-- Use search params here to navigate like orderId and tracking id-->
               <!-- So that i know which tracking pagto open and for what item -->
-            <button class="track-package-button button-secondary track-package-js">
+            <button class="track-package-button button-secondary track-package-js" data-order-id="${order.id}" data-prod-id="${prod.id}">
               Track package
             </button>
           </a>
@@ -78,7 +87,9 @@ function renderOrders(){
       </div>
     `
   });
-  document.querySelector('.order-container-js').innerHTML = orderContainerHTML;
+
+    console.log(orders)
+    document.querySelector('.order-container-js').innerHTML = orderContainerHTML;
 
   document.querySelectorAll('.buy-again-button-js')
     .forEach((butt)=>{

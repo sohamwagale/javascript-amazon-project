@@ -29,10 +29,10 @@ loadProducts();
 let orderProd;
 let orderOrd;
 orders.forEach(order => {
-    if(order.id === orderId){
+    if(order.id == orderId){   // loose equality (string vs number OK)
         orderOrd = order;
         order.products.forEach((product)=>{
-            if(product.productId === prodId){
+            if(product.productId == prodId){ // same here
                 orderProd = product;
             }
         })
@@ -46,14 +46,14 @@ document.querySelector('.product-quantity-js')
     .innerHTML = `Quantity: ${orderProd.quantity}`
 
 
-function calcPer() {
+export function calcPer() {
     const currTime = new Date();
     const orderTime = new Date(orderOrd.orderTime); // convert ISO string → Date
     const deliveryTime = new Date(orderProd.estimatedDeliveryTime);
     return (currTime - orderTime) / (deliveryTime - orderTime)*100;
 }
 
-const progress = calcPer();
+export const progress = calcPer();
 document.querySelector('.progress-bar').style.width = progress + '%';
 
 
