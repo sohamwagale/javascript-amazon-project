@@ -58,7 +58,7 @@ document.querySelector('.progress-bar').style.width = progress + '%';
 
 
 let currentStatus = '';
-if (progress > 0 && progress < 50) {
+if (progress >= 0 && progress < 50) {
   currentStatus = 'Preparing';
 } else if (progress >= 50 && progress < 100) {
   currentStatus = 'Shipped';
