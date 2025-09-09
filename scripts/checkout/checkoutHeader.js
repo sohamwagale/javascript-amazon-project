@@ -5,6 +5,6 @@ export default function renderCheckoutHeader(){
         .innerHTML= 
         `
         Checkout (<a class="return-to-home-link js-checkout-items"
-            href="amazon.html">${cart.calcTotalCartQuantity()} items</a>)
+            href="index.html">${cart.calcTotalCartQuantity()} items</a>)
         `;
 }

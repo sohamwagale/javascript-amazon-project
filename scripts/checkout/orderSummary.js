@@ -70,7 +70,7 @@ export function renderOrderSummary(){
             Your cart is Empty.
             </span>
             <br>
-            <a class="button-primary" href="./amazon.html" 
+            <a class="button-primary" href="./index.html" 
                 style="padding:10px 18px; margin-top:8px; display:inline-block; text-decoration:none;">
                 View Products
             </a>        

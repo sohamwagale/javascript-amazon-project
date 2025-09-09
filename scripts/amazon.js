@@ -128,7 +128,7 @@ function renderProductsGrid(){
         .addEventListener('click',()=>{
             const searchQuery = document.querySelector('.search-bar-js').value;
             console.log(searchQuery);
-            open(`./amazon.html?searchQuery=${searchQuery}`,'_self')
+            open(`./index.html?searchQuery=${searchQuery}`,'_self')
         });
 
     document.querySelector('.search-bar-js')
@@ -136,7 +136,7 @@ function renderProductsGrid(){
             if (event.key === 'Enter') {
                 const searchQuery = event.target.value;
                 console.log(searchQuery);
-                open(`./amazon.html?searchQuery=${searchQuery}`, '_self');
+                open(`./index.html?searchQuery=${searchQuery}`, '_self');
             }
         });
 }
