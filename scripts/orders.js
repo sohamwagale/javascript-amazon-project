@@ -91,6 +91,24 @@ function renderOrders(){
     console.log(orders)
     document.querySelector('.order-container-js').innerHTML = orderContainerHTML;
 
+    const addedMessageTimeouts = {};
+    
+        function addedAnimation(addedDisplay,productId){
+        addedDisplay.innerHTML="✓ Added!";
+
+        const previousTimeoutId = addedMessageTimeouts[productId];
+        if(previousTimeoutId){
+            clearTimeout(previousTimeoutId)
+        }
+
+        const addedDisplayTimeoutId =setTimeout(()=>{
+            addedDisplay.innerHTML=`<img class="buy-again-icon" src="images/icons/buy-again.png">
+            <span class="buy-again-message">Buy it again</span>`
+        },2000);
+
+        addedMessageTimeouts[productId] = addedDisplayTimeoutId;
+    }
+
   document.querySelectorAll('.buy-again-button-js')
     .forEach((butt)=>{
       butt.addEventListener('click',()=>{
@@ -98,7 +116,8 @@ function renderOrders(){
         cart.addToCart(prodId,1);
         // renderAmazonHeader();
         updateTotalCartQuantity();
-        console.log("butto");
+        console.log("Added");
+        addedAnimation(butt,prodId);
       })
     })
 

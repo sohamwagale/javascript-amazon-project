@@ -12,9 +12,9 @@ export function renderAmazonHeader(){
     </div>
 
     <div class="amazon-header-middle-section">
-      <input class="search-bar" type="text" placeholder="Search">
+      <input class="search-bar search-bar-js" type="text" placeholder="Search">
 
-      <button class="search-button">
+      <button class="search-button search-button-js">
         <img class="search-icon" src="images/icons/search-icon.png">
       </button>
     </div>

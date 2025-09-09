@@ -9,7 +9,31 @@ loadProductsFetch().then(()=>{
 
 function renderProductsGrid(){
     let prodHTML = '';
-    products.forEach((product)=>{
+
+    const url = new URL(window.location.href)
+    const srchQry = url.searchParams.get('searchQuery');
+    console.log(srchQry)
+
+    const searchBar = document.querySelector('.search-bar-js')
+    if(srchQry){
+        searchBar.value = srchQry;
+    }
+
+    let filteredProds = products
+    if(srchQry){
+        filteredProds = products.filter((product)=>{
+        let matchingKeyword = false;
+        product.keywords.forEach((keyword) => {
+            if (keyword.toLowerCase().includes(srchQry.toLowerCase())) {
+                matchingKeyword = true;
+            }
+        });
+
+        return matchingKeyword ||
+            product.name.toLowerCase().includes(srchQry.toLowerCase());        })
+    }
+
+    filteredProds.forEach((product)=>{
         prodHTML += `
             <div class="product-container">
                 <div class="product-image-container">
@@ -97,5 +121,22 @@ function renderProductsGrid(){
                 addedAnimation(productId);    
                 updateTotalCartQuantity();
             })
+        });
+
+
+    document.querySelector('.search-button-js')
+        .addEventListener('click',()=>{
+            const searchQuery = document.querySelector('.search-bar-js').value;
+            console.log(searchQuery);
+            open(`./amazon.html?searchQuery=${searchQuery}`,'_self')
+        });
+
+    document.querySelector('.search-bar-js')
+        .addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const searchQuery = event.target.value;
+                console.log(searchQuery);
+                open(`./amazon.html?searchQuery=${searchQuery}`, '_self');
+            }
         });
 }
